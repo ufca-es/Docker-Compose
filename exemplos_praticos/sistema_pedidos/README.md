@@ -59,6 +59,8 @@ Para remover deliberadamente os dados persistidos:
 docker compose down -v
 ```
 
+Na primeira criação do volume, o PostgreSQL executa o esquema disponível em `db/init`. A estrutura e os cuidados para recriá-la estão documentados em [docs/banco-de-dados.md](docs/banco-de-dados.md).
+
 ## Verificacao de saude
 
 O PostgreSQL utiliza `pg_isready`, enquanto o Redis utiliza `redis-cli ping`. Esses testes permitem que os demais servicos aguardem dependencias realmente prontas, em vez de considerar apenas a ordem de criacao dos containers.
