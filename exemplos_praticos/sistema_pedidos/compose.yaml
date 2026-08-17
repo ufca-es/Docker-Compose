@@ -42,14 +42,17 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "${ADMINER_PORT:-8081}:8080"
+      - "127.0.0.1:${ADMINER_PORT:-8081}:8080"
     networks:
       - backend
+      - ferramentas
     restart: unless-stopped
 
 networks:
   backend:
     internal: true
+  ferramentas:
+    driver: bridge
 
 volumes:
   postgres_data:

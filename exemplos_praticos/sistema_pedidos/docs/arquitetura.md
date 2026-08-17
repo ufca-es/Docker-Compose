@@ -27,7 +27,9 @@ Os componentes internos devem usar os nomes dos servicos como endereco:
 - Redis: `redis:6379`;
 - API: `api:8000`.
 
-A rede `backend` e marcada como interna para evitar acesso externo direto ao banco e ao Redis. Na integracao da aplicacao, uma segunda rede deve conectar somente o frontend e a API. A API participa das duas redes e funciona como limite entre a entrada da aplicacao e os servicos de dados.
+A rede `backend` e marcada como interna para evitar acesso externo direto ao banco e ao Redis. O Adminer participa tambem da rede `ferramentas`, que permite publicar sua interface apenas em `127.0.0.1`. Assim, ele alcanca o banco pelo nome `db`, sem tornar o PostgreSQL acessivel diretamente pelo host.
+
+Na integracao da aplicacao, uma rede de entrada deve conectar somente o frontend e a API. A API participa dessa rede e da `backend`, funcionando como limite entre a entrada da aplicacao e os servicos de dados.
 
 ## Contrato de inicializacao
 

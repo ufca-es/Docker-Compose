@@ -72,6 +72,8 @@ docker compose ps
 docker compose logs db redis
 ```
 
+Os procedimentos usados para conferir redes, acesso ao Adminer, descoberta de serviços e persistência estão em [docs/validacao-infraestrutura.md](docs/validacao-infraestrutura.md).
+
 ## Arquitetura completa
 
 A descricao dos componentes da demonstracao e dos contratos para integracao com a aplicacao esta em [docs/arquitetura.md](docs/arquitetura.md).
