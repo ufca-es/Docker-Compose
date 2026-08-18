@@ -13,7 +13,7 @@ pesquisa aplicada sobre Docker Compose + protótipo funcional que demonstre os c
 | Abner Levi | abnerlevi |
 | Alan Mendes Vieira | alan-mendes-ufca |
 | Cicero Jesus | cicero-jesus |
-| Diogo Gomes | (convite pendente — fgrdiogo) |
+| Diogo Gomes | fgrdiogo |
 | Maria Antônia | mariastrajano |
 | Matheus Nogueira | mathsNS |
 | Antônio Neto | netoo-444 |
