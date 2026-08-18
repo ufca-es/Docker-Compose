@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose -f compose.yaml convert -o kubernetes-gerado
+    kompose.service.nodeport.port: "30080"
+    kompose.service.type: nodeport
+    kompose.version: 1.38.0 (a8f5d1cbd)
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  ports:
+    - name: "8080"
+      nodePort: 30080
+      port: 8080
+      targetPort: 80
+  selector:
+    io.kompose.service: web
+  type: NodePort
