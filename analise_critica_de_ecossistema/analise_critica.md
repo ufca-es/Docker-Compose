@@ -1,6 +1,6 @@
 # Análise crítica e ecossistema do Docker Compose
 
-O Docker Compose é uma ferramenta voltada para a definição e execução de aplicações compostas por múltiplos containers. Em vez de iniciar cada container manualmente com vários comandos `docker run`, o Compose permite declarar serviços, redes, volumes, variáveis de ambiente e dependências em um único arquivo `compose.yaml`. Isso torna o ambiente mais fácil de reproduzir, compartilhar e versionar.
+O Docker Compose é uma ferramenta voltada para a definição e execução de aplicações compostas por múltiplos containers. Em vez de iniciar cada container manualmente com vários comandos `docker run`, o Compose permite declarar serviços, redes, volumes, variáveis de ambiente e dependências em um único arquivo `compose.yaml` [1]. Isso torna o ambiente mais fácil de reproduzir, compartilhar e versionar.
 
 Na prática, ele se tornou uma das formas mais simples de organizar aplicações em containers durante o desenvolvimento, testes locais, protótipos e ambientes pequenos. Seu principal valor está na padronização: todos os integrantes de uma equipe podem subir a mesma aplicação com um comando simples, reduzindo problemas clássicos de configuração, como diferenças de versão de banco de dados, dependências instaladas localmente ou variáveis esquecidas.
 
@@ -19,7 +19,7 @@ Um projeto típico com Compose pode reunir, por exemplo:
 
 Esse ecossistema é forte porque existe grande quantidade de imagens prontas no Docker Hub e porque muitas tecnologias já documentam exemplos usando Compose. Frameworks web, bancos de dados, ferramentas de observabilidade e ambientes de desenvolvimento frequentemente oferecem arquivos de exemplo, o que facilita a adoção.
 
-Além disso, o Compose combina bem com práticas de DevOps, pois aproxima desenvolvimento e operação. O mesmo arquivo que descreve a aplicação pode servir como documentação executável do ambiente. Isso ajuda equipes a entenderem quais serviços existem, como eles se conectam e quais configurações são necessárias.
+Além disso, o Compose combina bem com práticas de DevOps, pois aproxima desenvolvimento e operação. O mesmo arquivo que descreve a aplicação pode servir como documentação executável do ambiente. Isso ajuda equipes a entenderem quais serviços existem, como eles se conectam e quais configurações são necessárias [2].
 
 ## Pontos positivos
 
@@ -27,11 +27,11 @@ Um dos principais pontos positivos do Docker Compose é a simplicidade. Ele perm
 
 Outro ponto forte é a reprodutibilidade. Como o ambiente fica descrito em arquivo, é possível versioná-lo no Git e compartilhar com outros membros da equipe. Isso diminui a dependência de configurações manuais na máquina de cada pessoa.
 
-O Compose também facilita testes e experimentação. É possível subir e remover ambientes rapidamente, criar bancos temporários, testar integrações e simular uma arquitetura com vários serviços sem precisar configurar servidores separados.
+O Compose também facilita testes e experimentação. É possível subir e remover ambientes rapidamente, criar bancos temporários, testar integrações e simular uma arquitetura com vários serviços sem precisar configurar servidores separados [1].
 
 ## Limitações e críticas
 
-Apesar das vantagens, o Docker Compose possui limitações importantes. Ele não foi criado para ser uma solução completa de orquestração em produção em larga escala. Recursos como escalabilidade automática, alta disponibilidade, balanceamento avançado, atualização gradual e recuperação robusta de falhas são mais bem atendidos por ferramentas como Kubernetes.
+Apesar das vantagens, o Docker Compose possui limitações importantes. Ele não foi criado para ser uma solução completa de orquestração em produção em larga escala. Recursos como escalabilidade automática, alta disponibilidade, balanceamento avançado, atualização gradual e recuperação robusta de falhas podem exigir uma plataforma de orquestração mais completa, como o Kubernetes. A comparação detalhada fica na [frente específica de Compose e Kubernetes](../ComposeXKubernetes/kompose-exemplo/README.md).
 
 Outro ponto crítico é que o Compose pode passar uma falsa sensação de simplicidade. Embora seja fácil subir vários serviços, isso não elimina a complexidade real da aplicação. Configurações de rede, persistência, segurança, logs, permissões, secrets e consumo de recursos ainda precisam ser tratadas com cuidado.
 
@@ -49,7 +49,7 @@ O Docker Compose é uma ótima escolha para:
 - ambientes de demonstração;
 - padronização do setup entre membros da equipe.
 
-Por outro lado, ele pode não ser a melhor escolha quando a aplicação exige grande escala, alta disponibilidade, múltiplos servidores, deploys complexos ou controle avançado de infraestrutura. Nesses cenários, soluções como Kubernetes costumam ser mais adequadas.
+Por outro lado, ele pode não ser a melhor escolha quando a aplicação exige grande escala, alta disponibilidade, múltiplos servidores, deploys complexos ou controle avançado de infraestrutura. Nesses cenários, é necessário avaliar uma plataforma de orquestração mais completa, conforme discutido na [análise de Compose e Kubernetes](../ComposeXKubernetes/kompose-exemplo/README.md).
 
 ## Exemplo prático relacionado
 
@@ -65,4 +65,10 @@ O Docker Compose se destaca por transformar a configuração de ambientes com m�
 
 No entanto, ele deve ser entendido como uma ferramenta de orquestração simples, não como solução universal. Seu uso é muito eficiente quando o objetivo é configurar rapidamente um ambiente previsível, mas precisa ser avaliado com cuidado em cenários de produção maiores.
 
-Assim, a análise crítica mostra que o Docker Compose é mais forte quando usado para simplificar e padronizar ambientes, mas apresenta limites quando o projeto passa a exigir escalabilidade, resiliência e gerenciamento avançado. Ele é uma ferramenta essencial no ecossistema Docker, principalmente como ponte entre o aprendizado, o desenvolvimento local e a preparação para arquiteturas mais complexas.
+Assim, a análise crítica mostra que o Docker Compose é mais forte quando usado para simplificar e padronizar ambientes, mas apresenta limites quando o projeto passa a exigir escalabilidade, resiliência e gerenciamento avançado. Ele é uma ferramenta essencial no ecossistema Docker, principalmente como ponte entre o aprendizado, o desenvolvimento local e a preparação para arquiteturas mais complexas [1][3].
+
+## Referências bibliográficas
+
+1. [Docker Docs — Docker Compose](https://docs.docker.com/compose/)
+2. [Docker Docs — Use Compose in development](https://docs.docker.com/compose/how-tos/development/)
+3. [Docker Docs — Deploying applications](https://docs.docker.com/compose/how-tos/production/)
