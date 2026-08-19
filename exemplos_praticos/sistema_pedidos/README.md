@@ -30,12 +30,12 @@ Copy-Item .env.example .env
 
 Antes de utilizar o ambiente fora de uma demonstracao local, substitua o valor de `POSTGRES_PASSWORD`. O arquivo `.env` nao deve ser versionado.
 
-## Execucao da infraestrutura
+## Execucao do sistema
 
 Com Docker e o plugin Docker Compose instalados, execute:
 
 ```bash
-docker compose up -d
+docker compose up -d --build --wait
 docker compose ps
 ```
 
@@ -107,6 +107,8 @@ docker compose logs db redis api
 ```
 
 Os procedimentos usados para conferir redes, acesso ao Adminer, descoberta de serviços e persistência estão em [docs/validacao-infraestrutura.md](docs/validacao-infraestrutura.md).
+
+O teste reproduzível da API, fila, worker e tratamento de falhas está em [docs/validacao-fluxo-completo.md](docs/validacao-fluxo-completo.md).
 
 ## Arquitetura completa
 

@@ -86,4 +86,4 @@ Em 17 de agosto de 2026, com Docker Engine 29.7.2 e Docker Compose 5.3.1:
 - a chave `validacao:persistencia` permaneceu após `down/up`;
 - a chave temporária foi removida e os containers foram encerrados ao final.
 
-Esses resultados confirmam a infraestrutura local testada, mas ainda não validam o fluxo completo de pedidos, que depende da integração posterior da API e do worker.
+Esses resultados confirmam a infraestrutura local. A validação integrada da API e do worker está documentada em [validacao-fluxo-completo.md](validacao-fluxo-completo.md).
