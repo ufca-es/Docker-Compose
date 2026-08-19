@@ -71,7 +71,9 @@ Consultar um pedido especifico:
 curl http://127.0.0.1:8000/pedidos/1
 ```
 
-O pedido e criado com o estado `pendente` e publicado na fila `fila:pedidos` do Redis somente depois do commit no PostgreSQL. O worker consome essa fila com `BRPOP`, movendo o pedido para `processando` e, em seguida, para `processado` (com `processado_em` preenchido) ou `falhou`. O acompanhamento pode ser feito com:
+O pedido e criado com o estado `pendente` e publicado na fila `fila:pedidos` do Redis somente depois do commit no PostgreSQL. O worker consome essa fila com `BRPOP`, movendo o pedido para `processando` e, em seguida, para `processado` (com `processado_em` preenchido) ou `falhou`.
+
+Se o Redis ficar indisponivel entre a gravacao e a publicacao, a API responde com HTTP 503 e informa o identificador do pedido. Nesse caso, o registro e alterado para `falhou`, evitando que permaneca indefinidamente como `pendente` sem uma tarefa na fila. O acompanhamento pode ser feito com:
 
 ```bash
 docker compose logs -f worker
@@ -95,7 +97,7 @@ Na primeira criação do volume, o PostgreSQL executa o esquema disponível em `
 
 ## Verificacao de saude
 
-O PostgreSQL utiliza `pg_isready`, o Redis utiliza `redis-cli ping`, e a API utiliza `curl` sobre `GET /health`, que verifica de fato a conexao com o PostgreSQL e o Redis (nao apenas se o processo esta em execucao). Esses testes permitem que os demais servicos aguardem dependencias realmente prontas, em vez de considerar apenas a ordem de criacao dos containers. O worker e o Adminer dependem de `db` e `redis` com a condicao `service_healthy`.
+O PostgreSQL utiliza `pg_isready`, o Redis utiliza `redis-cli ping`, e a API utiliza `curl` sobre `GET /health`, que verifica de fato a conexao com o PostgreSQL e o Redis (nao apenas se o processo esta em execucao). Esses testes permitem que os demais servicos aguardem dependencias realmente prontas, em vez de considerar apenas a ordem de criacao dos containers. O worker depende de `db` e `redis` com a condicao `service_healthy`, enquanto o Adminer depende somente de `db`.
 
 O estado pode ser consultado com:
 

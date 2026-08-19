@@ -47,6 +47,12 @@ class ErroRedisIndisponivel(RuntimeError):
     pass
 
 
+class ErroPublicacaoPedido(ErroRedisIndisponivel):
+    def __init__(self, pedido_id: int, causa: Exception):
+        self.pedido_id = pedido_id
+        super().__init__(str(causa))
+
+
 def _parametros_postgres() -> dict:
     return dict(
         host=DATABASE_HOST,
@@ -164,6 +170,22 @@ def publicar_na_fila(pedido_id: int) -> None:
         raise ErroRedisIndisponivel(str(erro)) from erro
 
 
+def marcar_falha_de_publicacao(pedido_id: int) -> None:
+    """Evita deixar como pendente um pedido que nao entrou na fila."""
+    with conexao_postgres() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE pedidos SET status = 'falhou' "
+                "WHERE id = %s AND status = 'pendente'",
+                (pedido_id,),
+            )
+            if cur.rowcount != 1:
+                raise RuntimeError(
+                    f"Pedido {pedido_id} nao estava pendente ao registrar falha de publicacao"
+                )
+        conn.commit()
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
@@ -188,6 +210,18 @@ async def _tratar_erro_postgres(request: Request, exc: ErroPostgresIndisponivel)
 @app.exception_handler(ErroRedisIndisponivel)
 async def _tratar_erro_redis(request: Request, exc: ErroRedisIndisponivel):
     return JSONResponse(status_code=503, content={"detail": f"Redis indisponivel: {exc}"})
+
+
+@app.exception_handler(ErroPublicacaoPedido)
+async def _tratar_erro_publicacao(request: Request, exc: ErroPublicacaoPedido):
+    return JSONResponse(
+        status_code=503,
+        content={
+            "detail": "Pedido persistido, mas nao foi publicado para processamento",
+            "pedido_id": exc.pedido_id,
+            "status": "falhou",
+        },
+    )
 
 
 class PedidoCriar(BaseModel):
@@ -222,7 +256,11 @@ def criar_pedido(dados: PedidoCriar):
             pedido = cur.fetchone()
         conn.commit()
 
-    publicar_na_fila(pedido["id"])
+    try:
+        publicar_na_fila(pedido["id"])
+    except ErroRedisIndisponivel as erro:
+        marcar_falha_de_publicacao(pedido["id"])
+        raise ErroPublicacaoPedido(pedido["id"], erro) from erro
     return pedido
 
 
