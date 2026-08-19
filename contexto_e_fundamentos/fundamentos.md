@@ -7,6 +7,37 @@ apresentados aqui.
 
 - - -
 
+## 0. O que é conteinerização e Docker
+
+Para entender os fundamentos do Docker Compose, é necessário entender antes o que é
+conteinerização. Ela surge num contexto em que era difícil manter a portabilidade de
+sistemas entre ambientes diferentes — o clássico "na minha máquina funciona". Um container
+empacota a aplicação junto com suas dependências (bibliotecas, runtime, configuração) num
+único artefato que roda de forma isolada e idêntica em qualquer host com um motor de
+containers instalado.
+
+Diferente de uma máquina virtual, que virtualiza hardware inteiro e carrega um sistema
+operacional próprio para cada instância, um container compartilha o kernel do sistema
+operacional hospedeiro e isola apenas os processos (usando mecanismos do kernel Linux como
+*namespaces* e *cgroups*). Isso o torna muito mais leve e rápido de iniciar do que uma VM.
+
+De forma resumida, os containers existem para:
+
+- empacotar aplicações junto com suas dependências;
+- isolar dependências entre aplicações diferentes no mesmo host;
+- garantir portabilidade entre ambientes (desenvolvimento, testes, produção);
+- facilitar e acelerar a implantação.
+
+O Docker é a plataforma open-source de conteinerização que popularizou esse modelo. Foi
+lançado em março de 2013, na conferência PyCon [9]. Inicialmente, usava o LXC (*Linux
+Containers*) como mecanismo de isolamento de processos; a partir da versão 0.9, em 2014, o
+Docker passou a usar seu próprio componente, o **libcontainer**, escrito em Go, substituindo
+a dependência do LXC [9][10]. Desde 2017, os componentes open-source do Docker Engine são
+mantidos sob o guarda-chuva do **Moby Project**, criado pela Docker Inc. para separar o
+projeto open-source dos produtos comerciais da empresa [11].
+
+- - -
+
 ## 1. Origem e histórico
 
 O Docker Compose não nasceu dentro da Docker Inc. Ele começou como **Fig**, uma ferramenta
@@ -241,3 +272,10 @@ inicialização entre eles.
 6. Compose Specification — [spec.md (repositório oficial)](https://github.com/compose-spec/compose-spec/blob/main/spec.md)
 7. Compose Specification — [Services top-level element](https://compose-spec.github.io/compose-spec/05-services.html)
 8. Aanand Prasad — [Currículo / histórico Orchard, Fig e Docker](https://aanandprasad.com/cv/)
+9. Wikipedia — [Docker (software)](https://en.wikipedia.org/wiki/Docker_(software))
+10. Opensource.com — [How Linux containers have evolved](https://opensource.com/article/17/7/how-linux-containers-evolved)
+11. Moby Project — [mobyproject.org](https://mobyproject.org/)
+
+## Cursos recomendados
+1. Learn Docker do freeCodeCamp - [Base bem completa para começar em docker](https://www.youtube.com/watch?v=rjjES5IsPdg)
+2. Ultimate Docker Compose Tutorial - [Curso completo de Docker Compose](https://www.youtube.com/watch?v=SXwC9fSwct8)
