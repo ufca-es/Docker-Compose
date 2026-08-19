@@ -5,6 +5,12 @@ pesquisa aplicada sobre Docker Compose + protótipo funcional que demonstre os c
 
 ## Sumário
 
+- [Exemplo prático complexo: sistema de pedidos](exemplos_praticos/sistema_pedidos/README.md)
+  - [Arquitetura](exemplos_praticos/sistema_pedidos/docs/arquitetura.md)
+  - [Banco de dados](exemplos_praticos/sistema_pedidos/docs/banco-de-dados.md)
+  - [Validação da infraestrutura](exemplos_praticos/sistema_pedidos/docs/validacao-infraestrutura.md)
+  - [Validação do fluxo completo](exemplos_praticos/sistema_pedidos/docs/validacao-fluxo-completo.md)
+
 - - -
 
 ## Equipe
@@ -21,6 +27,29 @@ pesquisa aplicada sobre Docker Compose + protótipo funcional que demonstre os c
 - - - 
 
 ## Como executar
+
+### Sistema de pedidos
+
+O exemplo integra API FastAPI, worker, PostgreSQL, Redis e Adminer com redes, volumes, variáveis de ambiente, healthchecks e processamento assíncrono.
+
+```bash
+cd exemplos_praticos/sistema_pedidos
+cp .env.example .env
+docker compose --profile ferramentas up -d --build --wait
+docker compose ps
+```
+
+No PowerShell, substitua o comando de cópia por:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Depois da inicialização:
+
+- documentação interativa da API: `http://127.0.0.1:8000/docs`;
+- Adminer: `http://127.0.0.1:8081`;
+- instruções e demonstração: [exemplos_praticos/sistema_pedidos/README.md](exemplos_praticos/sistema_pedidos/README.md).
 
 - - - 
 
