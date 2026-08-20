@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    # Não expomos a porta do redis para fora, apenas para a rede interna
+    # criada automaticamente pelo Docker Compose.
