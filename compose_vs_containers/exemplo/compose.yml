@@ -13,3 +13,4 @@ services:
     image: redis:7-alpine
     # Não expomos a porta do redis para fora, apenas para a rede interna
     # criada automaticamente pelo Docker Compose.
+  
